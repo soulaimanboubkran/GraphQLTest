@@ -1,26 +1,30 @@
 {
-  "name": "graphql",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "build": "rimraf dist && npx tsc",
-    "prestart": "npm run build",
-    "start": "node dist/index.js",
-    "preserve": "npm run build",
-    "serve": "concurrently \"npx tsc -w\"  \"nodemon dist/index.js\""
-  },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "express": "^4.19.2",
-    "nodemon": "^3.1.4",
-    "typescript": "^5.5.4"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.14.12",
-    "concurrently": "^8.2.2",
-    "rimraf": "^6.0.1"
-  }
+   "name": "graphql",
+   "version": "1.0.0",
+   "main": "index.js",
+   "scripts": {
+     
+      "start": "ts-node src/index.ts",
+      "dev": "nodemon --watch src --exec ts-node src/index.ts",
+      "typeorm": "typeorm-ts-node-commonjs"
+   },
+   "author": "",
+   "license": "ISC",
+   "description": "",
+   "dependencies": {
+      "body-parser": "^1.19.1",
+      "express": "^4.17.2",
+      "nodemon": "^3.1.4",
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.13",
+      "typeorm": "0.3.20"
+   },
+   "devDependencies": {
+      "@types/express": "^4.17.21",
+      "@types/node": "^22.2.0",
+      "concurrently": "^8.2.2",
+      "rimraf": "^6.0.1",
+      "ts-node": "10.9.1",
+      "typescript": "^5.5.4"
+   }
 }
