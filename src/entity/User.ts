@@ -7,7 +7,7 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({unique:true})
     firstName: string
 
     @Column()
@@ -15,7 +15,8 @@ export class User {
 
     @Column()
     age: number
-
+    @Column({nullable:false,default:"1234"})
+    password: string
     @OneToMany(()=>Post,(post)=>post.author)
     posts! : Post[]
 }

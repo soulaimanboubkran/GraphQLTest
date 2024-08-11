@@ -24,17 +24,17 @@ export class UserController {
         return user
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        const { firstName, lastName, age } = request.body;
-
-        const user = Object.assign(new User(), {
-            firstName,
-            lastName,
-            age
-        })
-
-        return this.userRepository.save(user)
-    }
+   // async save(request: Request, response: Response, next: NextFunction) {
+   //     const { firstName, lastName, age } = request.body;
+//
+   //     const user = Object.assign(new User(), {
+   //         firstName,
+   //         lastName,
+   //         age
+   //     })
+//
+   //     return this.userRepository.save(user)
+   // }
 
     async remove(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id)

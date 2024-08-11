@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../data-source";
 import { Post } from "../entity/Post";
 import { User } from "../entity/User";
-import { AppError } from "../app";
 
 export interface CreatePostRequestBody {
     title: string;
@@ -20,7 +19,7 @@ export class PostController {
 
             const author = await this.userRepo.findOneBy({ id: userId });
             if (!author) {
-                return next(new AppError('Author not found', 404));
+                throw new Error('Author not found');
             }
 
             const newPost = Object.assign(new User(), {
@@ -31,6 +30,14 @@ export class PostController {
             await this.postRepo.save(newPost);
 
             res.status(201).json(newPost);
+        } catch (error) {
+            next(error);
+        }
+    }
+    async all(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const posts = await this.postRepo.find({ relations: ["author"] });
+            res.status(200).json(posts);
         } catch (error) {
             next(error);
         }

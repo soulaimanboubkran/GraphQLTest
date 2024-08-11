@@ -1,6 +1,7 @@
 import { body, param } from "express-validator"
 import { UserController } from "./controller/User.controller"
 import { PostController } from "./controller/Post.controller"
+import { AuthController } from "./controller/Auth.controller"
 
 export const Routes = [{
     method: "get",
@@ -47,6 +48,38 @@ export const Routes = [{
         body('title').isString(),
         body('body').isString(),
         body('userId').isInt({min:0}).withMessage('must be positive number')
+    ]
+}
+, {
+    method: "get",
+    route: "/posts",
+    controller: PostController,
+    action: "all",
+    validation:[
+        
+    ]
+}
+, {
+    method: "post",
+    route: "/auth/sign-up",
+    controller: AuthController,
+    action: "register",
+    validation:[
+        body('firstName').isString(),
+        body('lastName').isString(),
+        body('age').isInt({min:0}).withMessage('must be positive number'),
+        body('password').isString(),
+    ]
+}
+, {
+    method: "post",
+    route: "/auth/sign-in",
+    controller: AuthController,
+    action: "login",
+    validation:[
+        body('firstName').isString(),
+        
+        body('password').isString(),
     ]
 }
 ]
