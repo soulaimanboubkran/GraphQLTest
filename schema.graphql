@@ -2,7 +2,25 @@
 ### Do not make changes to this file directly
 
 
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type Mutation {
+  login(firstName: String!, password: String!): AuthPayload!
+  register(age: Int!, firstName: String!, lastName: String!, password: String!): AuthPayload!
+}
+
+type Post {
+  author: User!
+  body: String!
+  id: Int!
+  title: String!
+}
+
 type Query {
+  posts: [Post!]!
   users: [User!]!
 }
 

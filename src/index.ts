@@ -1,12 +1,23 @@
 
 import { AppDataSource } from "./data-source"
 
+import app from './app'
 import { port } from "./config"
-import { schema } from "./schema";
-import { ApolloServer } from "apollo-server";
 import dotenv from 'dotenv';
+import { ApolloServer } from "apollo-server";
+import { schema } from './schema';
 
 
+//AppDataSource.initialize().then(async () => {
+//
+// 
+//    app.listen(port)
+//
+// 
+//
+//    console.log(`Open http://localhost:${process.env.PORT}/users`)
+//
+//}).catch(error => console.log(error))
 dotenv.config()
 const boot = async () => {
     try {

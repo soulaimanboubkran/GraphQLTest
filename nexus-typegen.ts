@@ -28,6 +28,16 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  AuthPayload: { // root type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
+  Mutation: {};
+  Post: { // root type
+    body: string; // String!
+    id: number; // Int!
+    title: string; // String!
+  }
   Query: {};
   User: { // root type
     age: number; // Int!
@@ -49,7 +59,22 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  AuthPayload: { // field return type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
+  Mutation: { // field return type
+    login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    register: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+  }
+  Post: { // field return type
+    author: NexusGenRootTypes['User']; // User!
+    body: string; // String!
+    id: number; // Int!
+    title: string; // String!
+  }
   Query: { // field return type
+    posts: NexusGenRootTypes['Post'][]; // [Post!]!
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   User: { // field return type
@@ -62,7 +87,22 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  AuthPayload: { // field return type name
+    token: 'String'
+    user: 'User'
+  }
+  Mutation: { // field return type name
+    login: 'AuthPayload'
+    register: 'AuthPayload'
+  }
+  Post: { // field return type name
+    author: 'User'
+    body: 'String'
+    id: 'Int'
+    title: 'String'
+  }
   Query: { // field return type name
+    posts: 'Post'
     users: 'User'
   }
   User: { // field return type name
@@ -75,6 +115,18 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    login: { // args
+      firstName: string; // String!
+      password: string; // String!
+    }
+    register: { // args
+      age: number; // Int!
+      firstName: string; // String!
+      lastName: string; // String!
+      password: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
