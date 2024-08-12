@@ -6,7 +6,6 @@ import dotenv from 'dotenv'
 import morgan from 'morgan'
 import { validationResult } from "express-validator"
 
-
 function handleError(err: any, req: Request, res: Response, next: NextFunction) {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
@@ -19,6 +18,8 @@ function handleError(err: any, req: Request, res: Response, next: NextFunction) 
     app.use(morgan("tiny"))
     app.use(bodyParser.json())
     dotenv.config()
+
+
     // register express routes from defined application routes
     Routes.forEach(route => {
         // Apply validation and middleware
