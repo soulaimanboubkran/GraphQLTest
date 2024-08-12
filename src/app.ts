@@ -8,11 +8,11 @@ import { validationResult } from "express-validator"
 
 
 function handleError(err: any, req: Request, res: Response, next: NextFunction) {
-    const statusCode = err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-  
-    res.status(statusCode).json({ message });
-  }
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+
+  res.status(statusCode).json({ message });
+}
 
     // create express app
     const app = express()
@@ -21,24 +21,26 @@ function handleError(err: any, req: Request, res: Response, next: NextFunction) 
     dotenv.config()
     // register express routes from defined application routes
     Routes.forEach(route => {
-        (app as any)[route.method](route.route,
-            ...route.validation,//like a middleware
-            async (req: Request, res: Response, next: Function) => {
-           try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-              return res.status(400).json({ errors: errors.array() });
+        // Apply validation and middleware
+        const routeMiddleware = [
+            ...route.validation || [],
+            ...(route.middleware || []),
+            async (req: Request, res: Response, next: NextFunction) => {
+                try {
+                    const errors = validationResult(req);
+                    if (!errors.isEmpty()) {
+                        return res.status(400).json({ errors: errors.array() });
+                    }
+                    const result = await (new (route.controller as any))[route.action](req, res, next);
+                    res.json(result);
+                } catch (error) {
+                    next(error);
+                }
             }
-            const result = await  (new (route.controller as any))[route.action](req, res, next)
-
-             res.json(result)
-           } catch (error) {
-            next(error);
-           }
-                
-         
-        })
-    })
+        ];
+    
+        (app as any)[route.method](route.route, ...routeMiddleware);
+    });
 
     app.use(handleError);
 export default app;

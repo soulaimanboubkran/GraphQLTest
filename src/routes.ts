@@ -1,9 +1,17 @@
-import { body, param } from "express-validator"
+import { body, param, ValidationChain } from "express-validator"
 import { UserController } from "./controller/User.controller"
 import { PostController } from "./controller/Post.controller"
 import { AuthController } from "./controller/Auth.controller"
-
-export const Routes = [{
+import { AuthMiddleware } from "./middleware/AuthMiddleware";
+interface Route {
+    method: string;
+    route: string;
+    controller: any;
+    action: string;
+    validation?: ValidationChain[];
+    middleware?: any[]; // Add middleware property
+  }
+export const Routes:Route[] = [{
     method: "get",
     route: "/users",
     controller: UserController,
@@ -11,6 +19,7 @@ export const Routes = [{
     validation:[
       
     ]
+    
 }, {
     method: "get",
     route: "/users/:id",
@@ -48,7 +57,8 @@ export const Routes = [{
         body('title').isString(),
         body('body').isString(),
         body('userId').isInt({min:0}).withMessage('must be positive number')
-    ]
+    ],
+    middleware: [AuthMiddleware.verifyToken] 
 }
 , {
     method: "get",
