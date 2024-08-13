@@ -6,6 +6,7 @@ import { port } from "./config"
 import dotenv from 'dotenv';
 import { ApolloServer } from "apollo-server";
 import { schema } from './schema';
+import { authMiddleware } from "./middleware/Auth";
 
 
 //AppDataSource.initialize().then(async () => {
@@ -25,6 +26,10 @@ const boot = async () => {
   
       const server = new ApolloServer({
         schema,
+        context: ({ req }) => {
+            const user = req.headers.authorization ? authMiddleware(req) : null;
+            return { user, req };
+          },
       
       
       });

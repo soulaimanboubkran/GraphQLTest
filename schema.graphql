@@ -8,6 +8,7 @@ type AuthPayload {
 }
 
 type Mutation {
+  createPost(body: String!, title: String!): Post!
   login(firstName: String!, password: String!): AuthPayload!
   register(age: Int!, firstName: String!, lastName: String!, password: String!): AuthPayload!
 }

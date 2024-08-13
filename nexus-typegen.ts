@@ -64,6 +64,7 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User']; // User!
   }
   Mutation: { // field return type
+    createPost: NexusGenRootTypes['Post']; // Post!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     register: NexusGenRootTypes['AuthPayload']; // AuthPayload!
   }
@@ -92,6 +93,7 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   Mutation: { // field return type name
+    createPost: 'Post'
     login: 'AuthPayload'
     register: 'AuthPayload'
   }
@@ -116,6 +118,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createPost: { // args
+      body: string; // String!
+      title: string; // String!
+    }
     login: { // args
       firstName: string; // String!
       password: string; // String!
